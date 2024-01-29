@@ -34,6 +34,8 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.appcompat)
             implementation(libs.compose.ui.tooling)
+            implementation(libs.material)
+            implementation(libs.androidx.core.splashscreen)
             implementation(libs.decompose)
             implementation(libs.koin.android)
             implementation(libs.accompanist.permissions)

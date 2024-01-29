@@ -1,7 +1,7 @@
 package data.utils
 
 object URLConstants {
-    const val BASE_URL = "http://192.168.1.10:8081/"
+    const val BASE_URL = "http://192.168.1.6:8081/"
     const val LOGIN = "${BASE_URL}auth/login"
     const val REGISTER = "${BASE_URL}auth/register"
     const val PRODUCTS_BY_CATEGORY = "${BASE_URL}product/getProductsByCategory"

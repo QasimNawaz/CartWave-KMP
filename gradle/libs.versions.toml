@@ -13,6 +13,8 @@ compose-uitooling = "1.5.4"
 kotlinx-coroutines = "1.7.3"
 kotlinx-serialization = "1.6.2"
 accompanist-permissions = "0.32.0"
+androidxCoreSplashscreen = "1.0.1"
+material = "1.11.0"
 windowsizeMultiplatform = "0.3.2"
 
 multiplatform-settings = "1.1.1"
@@ -31,8 +33,11 @@ compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = 
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
 windowsize-multiplatform = { module = "dev.chrisbanes.material3:material3-window-size-class-multiplatform", version.ref = "windowsizeMultiplatform" }
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist-permissions" }
+# Splash
+androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidxCoreSplashscreen" }
 
 # multiplatform
 multiplatform-settings = { module = "com.russhwolf:multiplatform-settings-no-arg", version.ref = "multiplatform-settings" }
