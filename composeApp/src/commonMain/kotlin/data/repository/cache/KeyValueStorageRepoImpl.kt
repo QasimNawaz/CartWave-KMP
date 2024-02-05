@@ -28,6 +28,11 @@ class KeyValueStorageRepoImpl(private val settings: Settings) : KeyValueStorageR
         set(value) {
             settings[KeyValueStorageKeys.DO_REMEMBER.key] = value
         }
+    override var accessToken: String?
+        get() = settings.getStringOrNull(KeyValueStorageKeys.ACCESS_TOKEN.key)
+        set(value) {
+            settings[KeyValueStorageKeys.ACCESS_TOKEN.key] = value
+        }
 
     @OptIn(ExperimentalSerializationApi::class, ExperimentalSettingsApi::class)
     override var user: User?
