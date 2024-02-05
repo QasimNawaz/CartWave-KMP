@@ -4,6 +4,7 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
+import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.pushNew
 import com.arkivanov.decompose.router.stack.replaceAll
 import kotlinx.serialization.Serializable
@@ -44,24 +45,34 @@ class RootComponent(
             is Configuration.OnboardingScreenConfig -> Child.OnboardingScreenChild(
                 OnboardingScreenComponent(componentContext = context, onRootNavigate = {
                     navigation.replaceAll(Configuration.AuthScreenConfig)
-                }))
+                })
+            )
 
-            is Configuration.AuthScreenConfig -> Child.AuthScreenChild(AuthScreenComponent(componentContext = context,
-                onRootNavigate = {
-                    navigation.replaceAll(Configuration.MainScreenConfig)
-                }))
+            is Configuration.AuthScreenConfig -> Child.AuthScreenChild(
+                AuthScreenComponent(componentContext = context,
+                    onRootNavigate = {
+                        navigation.replaceAll(Configuration.MainScreenConfig)
+                    })
+            )
 
-            is Configuration.MainScreenConfig -> Child.MainScreenChild(MainScreenComponent(componentContext = context,
-                onRootNavigate = {
-                    navigation.pushNew(it)
-                }))
+            is Configuration.MainScreenConfig -> Child.MainScreenChild(
+                MainScreenComponent(componentContext = context,
+                    onRootNavigate = {
+                        navigation.pushNew(it)
+                    })
+            )
 
-            Configuration.AddressScreenConfig -> Child.AddressScreenChild(
+            is Configuration.AddressScreenConfig -> Child.AddressScreenChild(
                 AddressScreenComponent(componentContext = context)
             )
 
-            Configuration.ProductDetailScreenConfig -> Child.ProductDetailScreenChild(
-                ProductDetailScreenComponent(componentContext = context)
+            is Configuration.ProductDetailScreenConfig -> Child.ProductDetailScreenChild(
+                ProductDetailScreenComponent(
+                    componentContext = context,
+                    productId = config.productId, onGoBack = {
+                        navigation.pop()
+                    }
+                )
             )
         }
     }
@@ -90,7 +101,7 @@ class RootComponent(
         data object MainScreenConfig : Configuration()
 
         @Serializable
-        data object ProductDetailScreenConfig : Configuration()
+        data class ProductDetailScreenConfig(val productId: Int) : Configuration()
 
         @Serializable
         data object AddressScreenConfig : Configuration()

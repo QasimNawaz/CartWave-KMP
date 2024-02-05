@@ -25,6 +25,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import cartwave_kmp.composeapp.generated.resources.Res
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
@@ -42,7 +44,7 @@ fun CartWaveOutlinedTextField(
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
-    iconDrawable: String? = null
+    iconDrawable: DrawableResource? = null
 ) {
     Column {
         OutlinedTextField(
@@ -128,14 +130,14 @@ fun CartWaveOutlinedTextFieldPassword(
                 if (showPassword) {
                     IconButton(onClick = { showPassword = false }) {
                         Icon(
-                            painter = painterResource("ic_eye.xml"),
+                            painter = painterResource(Res.drawable.ic_eye),
                             contentDescription = "hide_password",
                         )
                     }
                 } else {
                     IconButton(onClick = { showPassword = true }) {
                         Icon(
-                            painter = painterResource("ic_eye_slash.xml"),
+                            painter = painterResource(Res.drawable.ic_eye_slash),
                             contentDescription = "hide_password",
                         )
                     }

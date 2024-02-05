@@ -30,6 +30,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
+import cartwave_kmp.composeapp.generated.resources.Res
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
@@ -64,7 +66,7 @@ fun ImageSourceOptionDialog(
                 Icon(
                     tint = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.size(25.dp),
-                    painter = painterResource("ic_camera.xml"),
+                    painter = painterResource(Res.drawable.ic_camera),
                     contentDescription = null
                 )
                 Text(text = "Camera", color = MaterialTheme.colorScheme.onSurface)
@@ -79,7 +81,7 @@ fun ImageSourceOptionDialog(
                 Icon(
                     tint = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.size(25.dp),
-                    painter = painterResource("ic_images.xml"),
+                    painter = painterResource(Res.drawable.ic_images),
                     contentDescription = null
                 )
                 Text(text = "Gallery", color = MaterialTheme.colorScheme.onSurface)
@@ -93,7 +95,7 @@ fun ImageSourceOptionDialog(
 fun AlertMessageDialog(
     title: String,
     message: String? = null,
-    resource: String? = "ic_error_dialog.xml",
+    resource: DrawableResource = Res.drawable.ic_error_dialog,
     positiveButtonText: String? = null,
     negativeButtonText: String? = null,
     onPositiveClick: () -> Unit = {},
@@ -116,13 +118,11 @@ fun AlertMessageDialog(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                resource?.let {
-                    Image(
-                        modifier = Modifier.size(100.dp),
-                        painter = painterResource(it),
-                        contentDescription = null
-                    )
-                }
+                Image(
+                    modifier = Modifier.size(100.dp),
+                    painter = painterResource(resource),
+                    contentDescription = null
+                )
                 Spacer(modifier = Modifier.height(20.dp))
                 Text(
                     text = title,

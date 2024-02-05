@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import cartwave_kmp.composeapp.generated.resources.Res
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -74,7 +75,7 @@ fun SplashScreen(component: SplashScreenComponent) {
                     .offset(y = with(LocalDensity.current) { logoOffsetY.value.dp })
             ) {
                 Image(
-                    painter = painterResource("ic_logo.xml"),
+                    painter = painterResource(Res.drawable.ic_logo),
                     contentDescription = null,
                     contentScale = ContentScale.Inside,
                 )

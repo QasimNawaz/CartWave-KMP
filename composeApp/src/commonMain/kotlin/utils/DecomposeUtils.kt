@@ -1,5 +1,12 @@
 package utils
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerScope
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.essenty.lifecycle.LifecycleOwner
 import com.arkivanov.essenty.lifecycle.doOnDestroy
 import domain.model.BaseResponse
@@ -55,3 +62,26 @@ suspend fun <T> Flow<NetworkCall<BaseResponse<T>>>.asUiState(
         }
     }
 }
+
+@ExperimentalFoundationApi
+@ExperimentalDecomposeApi
+fun homeDefaultHorizontalPager(): Pager =
+    { modifier, state, key, pageContent ->
+        HorizontalPager(
+            modifier = modifier,
+            state = state,
+            userScrollEnabled = false,
+            key = key,
+            beyondBoundsPageCount = 1,
+            pageContent = pageContent,
+        )
+    }
+
+@OptIn(ExperimentalFoundationApi::class)
+internal typealias Pager =
+        @Composable (
+            Modifier,
+            PagerState,
+            key: (index: Int) -> Any,
+            pageContent: @Composable PagerScope.(index: Int) -> Unit,
+        ) -> Unit

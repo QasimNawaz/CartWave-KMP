@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import cartwave_kmp.composeapp.generated.resources.Res
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.composables.CartWaveOutlinedTextField
@@ -44,7 +45,7 @@ fun ForgotPasswordScreen(component: ForgotPasswordScreenComponent) {
             onClick = { component.goBack() }) {
             Icon(
                 modifier = Modifier.size(20.dp),
-                painter = painterResource("ic_arrow_left.xml"),
+                painter = painterResource(Res.drawable.ic_arrow_left),
                 contentDescription = "null",
                 tint = MaterialTheme.colorScheme.onBackground
             )

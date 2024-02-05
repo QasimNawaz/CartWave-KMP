@@ -42,8 +42,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cartwave_kmp.composeapp.generated.resources.Res
 import data.model.User
-import domain.dto.LoginRequestDto
 import domain.dto.RegisterRequestDto
 import domain.utils.NetworkUiState
 import kotlinx.coroutines.Dispatchers
@@ -246,7 +246,7 @@ fun SignupScreen(component: SignupScreenComponent) {
                     modifier = Modifier.size(100.dp).clip(CircleShape).clickable {
                         imageSourceOptionDialog = true
                     },
-                    painter = painterResource("ic_person_circle.xml"),
+                    painter = painterResource(Res.drawable.ic_person_circle),
                     contentDescription = null
                 )
             }
@@ -262,7 +262,7 @@ fun SignupScreen(component: SignupScreenComponent) {
                 component.firstNameState.validate()
             },
             label = "First Name",
-            iconDrawable = "ic_profile.xml",
+            iconDrawable = Res.drawable.ic_profile,
             imeAction = ImeAction.Next,
             keyboardActions = KeyboardActions(onNext = { lNameFocusRequester.requestFocus() })
         )
@@ -277,7 +277,7 @@ fun SignupScreen(component: SignupScreenComponent) {
                 component.lastNameState.validate()
             },
             label = "Last Name",
-            iconDrawable = "ic_profile.xml",
+            iconDrawable = Res.drawable.ic_profile,
             imeAction = ImeAction.Next,
             keyboardActions = KeyboardActions(onNext = { emailFocusRequester.requestFocus() })
         )
@@ -293,7 +293,7 @@ fun SignupScreen(component: SignupScreenComponent) {
             },
             label = "Email",
             keyboardType = KeyboardType.Email,
-            iconDrawable = "ic_email.xml",
+            iconDrawable = Res.drawable.ic_email,
             imeAction = ImeAction.Next,
             keyboardActions = KeyboardActions(onNext = { passFocusRequester.requestFocus() })
         )
@@ -354,13 +354,13 @@ fun SignupScreen(component: SignupScreenComponent) {
         ) {
             SocialButton(
                 modifier = Modifier.fillMaxWidth().weight(1f),
-                resource = "ic_google.xml",
+                resource = Res.drawable.ic_google,
                 label = "Google"
             )
             Spacer(modifier = Modifier.size(10.dp))
             SocialButton(
                 modifier = Modifier.fillMaxWidth().weight(1f),
-                resource = "ic_facebook.xml",
+                resource = Res.drawable.ic_facebook,
                 label = "Facebook"
             )
         }

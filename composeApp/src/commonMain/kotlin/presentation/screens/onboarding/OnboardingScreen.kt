@@ -38,6 +38,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import cartwave_kmp.composeapp.generated.resources.Res
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
@@ -234,27 +236,28 @@ fun PageIndicatorView(
     }
 }
 
+@OptIn(ExperimentalResourceApi::class)
 sealed class OnBoardingPage(
-    val topBg: String, val image: String, val title: String, val description: String
+    val topBg: DrawableResource, val image: DrawableResource, val title: String, val description: String
 ) {
 
     object First : OnBoardingPage(
-        topBg = "ic_onboarding_bg_one.xml",
-        image = "ic_onboarding_one.xml",
+        topBg = Res.drawable.ic_onboarding_bg_one,
+        image = Res.drawable.ic_onboarding_one,
         title = "Purchase Online !!",
         description = "Seamless clicks, endless picks – CartWave: your gateway to hassle-free online shopping tricks."
     )
 
     object Second : OnBoardingPage(
-        topBg = "ic_onboarding_bg_two.xml",
-        image = "ic_onboarding_two.xml",
+        topBg = Res.drawable.ic_onboarding_bg_two,
+        image = Res.drawable.ic_onboarding_two,
         title = "Track Order !!",
         description = "Order en route, worries put to rest, CartWave's tracking guides you through, ensuring your order's best."
     )
 
     object Third : OnBoardingPage(
-        topBg = "ic_onboarding_bg_three.xml",
-        image = "ic_onboarding_three.xml",
+        topBg = Res.drawable.ic_onboarding_bg_three,
+        image = Res.drawable.ic_onboarding_three,
         title = "Get your order !!",
         description = "Unbox delight, your order takes flight – CartWave delivers, making everything just right."
     )

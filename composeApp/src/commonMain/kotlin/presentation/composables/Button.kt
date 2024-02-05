@@ -26,6 +26,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
@@ -33,7 +34,7 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun SocialButton(
     modifier: Modifier = Modifier,
-    resource: String,
+    resource: DrawableResource,
     label: String,
     onClick: () -> Unit = {},
 ) {

@@ -27,7 +27,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cartwave_kmp.composeapp.generated.resources.Res
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.screens.main.MainScreenComponent
@@ -122,30 +124,33 @@ fun AddItem(
 
 val BottomNavHeight = 52.dp
 
+@OptIn(ExperimentalResourceApi::class)
 sealed class BottomBarScreenInfo(
-    val child: MainScreenComponent.BottomBarConfiguration, val title: String, val icon: String
+    val child: MainScreenComponent.BottomBarConfiguration,
+    val title: String,
+    val icon: DrawableResource
 ) {
     data object Home : BottomBarScreenInfo(
         child = MainScreenComponent.BottomBarConfiguration.HomeScreenConfig,
         title = "Home",
-        icon = "ic_home.xml"
+        icon = Res.drawable.ic_home
     )
 
     data object Wishlist : BottomBarScreenInfo(
         child = MainScreenComponent.BottomBarConfiguration.FavouriteScreenConfig,
         title = "Wishlist",
-        icon = "ic_favourite.xml"
+        icon = Res.drawable.ic_favourite
     )
 
     data object Cart : BottomBarScreenInfo(
         child = MainScreenComponent.BottomBarConfiguration.CartScreenConfig,
         title = "Cart",
-        icon = "ic_cart.xml"
+        icon = Res.drawable.ic_cart
     )
 
     data object Profile : BottomBarScreenInfo(
         child = MainScreenComponent.BottomBarConfiguration.ProfileScreenConfig,
         title = "Profile",
-        icon = "ic_profile.xml"
+        icon = Res.drawable.ic_profile
     )
 }

@@ -65,6 +65,7 @@ class LoginScreenComponent(
     fun saveUser(user: User, remember: Boolean) {
         coroutineScope.launch {
             keyValueStorageRepo.doRemember = remember
+            keyValueStorageRepo.accessToken = user.authToken
             keyValueStorageRepo.user = user
             _redirectToHome.value = true
         }

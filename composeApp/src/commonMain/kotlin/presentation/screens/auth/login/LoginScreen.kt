@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalResourceApi::class)
+
 package presentation.screens.auth.login
 
 import androidx.compose.foundation.clickable
@@ -29,9 +31,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cartwave_kmp.composeapp.generated.resources.Res
 import data.model.User
 import domain.dto.LoginRequestDto
 import domain.utils.NetworkUiState
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 import presentation.composables.AlertMessageDialog
 import presentation.composables.CartWaveLabelledCheckBox
 import presentation.composables.CartWaveOutlinedTextField
@@ -120,7 +124,7 @@ fun LoginScreen(component: LoginScreenComponent) {
             },
             label = "Email",
             keyboardType = KeyboardType.Email,
-            iconDrawable = "ic_email.xml"
+            iconDrawable = Res.drawable.ic_email
         )
         Spacer(modifier = Modifier.size(5.dp))
         CartWaveOutlinedTextFieldPassword(
@@ -191,13 +195,13 @@ fun LoginScreen(component: LoginScreenComponent) {
         ) {
             SocialButton(
                 modifier = Modifier.fillMaxWidth().weight(1f),
-                resource = "ic_google.xml",
+                resource = Res.drawable.ic_google,
                 label = "Google"
             )
             Spacer(modifier = Modifier.size(10.dp))
             SocialButton(
                 modifier = Modifier.fillMaxWidth().weight(1f),
-                resource = "ic_facebook.xml",
+                resource = Res.drawable.ic_facebook,
                 label = "Facebook"
             )
         }
