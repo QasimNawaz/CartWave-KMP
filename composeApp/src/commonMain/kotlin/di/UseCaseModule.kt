@@ -6,6 +6,7 @@ import domain.usecase.cart.UpdateCartUseCase
 import domain.usecase.cart.GetUserCartUseCase
 import domain.usecase.cart.RemoveCartUseCase
 import domain.usecase.favourite.AddToFavouriteUseCase
+import domain.usecase.favourite.FavouritesPagingUseCase
 import domain.usecase.favourite.RemoveFromFavouriteUseCase
 import domain.usecase.product.ProductDetailUseCase
 import domain.usecase.product.ProductsGroupBySubCategoryUseCase
@@ -17,6 +18,7 @@ val useCaseModule = module {
     single { ProductsGroupBySubCategoryUseCase(get()) }
     single { ProductDetailUseCase(get()) }
     single { AddToFavouriteUseCase(get()) }
+    single { FavouritesPagingUseCase(get()) }
     single { RemoveFromFavouriteUseCase(get()) }
     single { UpdateCartUseCase(get()) }
     single { RemoveCartUseCase(get()) }

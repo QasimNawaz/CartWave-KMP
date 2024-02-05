@@ -2,6 +2,7 @@ package di
 
 import data.dataSource.RemoteDataSource
 import data.dataSource.RemoteDataSourceImpl
+import data.dataSource.paging.FavouritesPagingSourceFactory
 import data.repository.auth.AuthRepo
 import data.repository.cache.KeyValueStorageRepo
 import data.repository.auth.AuthRepoImpl
@@ -19,6 +20,7 @@ val repositoryModule = module {
     single<RemoteDataSource> { RemoteDataSourceImpl(get(), get()) }
     single<AuthRepo> { AuthRepoImpl(get()) }
     single<ProductsRepo> { ProductsRepoImpl(get()) }
-    single<FavouritesRepo> { FavouritesRepoImpl(get()) }
+    single<FavouritesRepo> { FavouritesRepoImpl(get(), get()) }
     single<CartRepo> { CartRepoImpl(get()) }
+    factory { FavouritesPagingSourceFactory(get(), get()) }
 }

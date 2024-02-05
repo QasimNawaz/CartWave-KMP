@@ -38,7 +38,7 @@ class MainScreenComponent(
 
             is BottomBarConfiguration.FavouriteScreenConfig -> BottomBarChild.FavouriteScreenChild(
                 FavouriteScreenComponent(
-                    componentContext = context
+                    componentContext = context, onRootNavigate
                 )
             )
 

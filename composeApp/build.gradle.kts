@@ -61,6 +61,7 @@ kotlin {
             implementation(libs.coil.compose.core)
             implementation(libs.coil.compose)
             implementation(libs.napier)
+            implementation(libs.bundles.paging)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
