@@ -38,14 +38,14 @@ val ktorHttpClient = httpClient {
         socketTimeoutMillis = TIME_OUT
     }
 
-//    install(Logging) {
-//        logger = object : Logger {
-//            override fun log(message: String) {
-//                utils.Logger.d(message, "HTTP Client ->")
-//            }
-//        }
-//        level = LogLevel.ALL
-//    }
+    install(Logging) {
+        logger = object : Logger {
+            override fun log(message: String) {
+                utils.Logger.d(message, "HTTP Client ->")
+            }
+        }
+        level = LogLevel.ALL
+    }
 
 
     install(DefaultRequest) {

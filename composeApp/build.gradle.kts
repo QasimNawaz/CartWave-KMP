@@ -16,7 +16,7 @@ kotlin {
             }
         }
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -27,9 +27,9 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     sourceSets {
-        
+
         androidMain.dependencies {
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.appcompat)
@@ -56,6 +56,10 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.bundles.ktor)
             implementation(libs.kamel.image)
+            implementation(libs.coil)
+            implementation(libs.coil.network.ktor)
+            implementation(libs.coil.compose.core)
+            implementation(libs.coil.compose)
             implementation(libs.napier)
         }
         iosMain.dependencies {
@@ -69,8 +73,6 @@ android {
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    sourceSets["main"].res.srcDirs("src/androidMain/res")
-    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 
     defaultConfig {
         applicationId = "kmp.cartwave.store"
