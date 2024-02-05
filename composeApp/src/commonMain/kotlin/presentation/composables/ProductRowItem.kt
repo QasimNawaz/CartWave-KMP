@@ -101,13 +101,13 @@ fun ProductRowItem(
                 text = product.title ?: "",
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 2,
-                lineHeight = 14.sp,
+                lineHeight = 17.sp,
                 fontWeight = FontWeight.Bold,
                 fontSize = MaterialTheme.typography.titleSmall.fontSize,
                 color = MaterialTheme.colorScheme.onBackground
             )
 
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.weight(4f))
             Row(modifier = Modifier.padding(start = 5.dp, end = 5.dp, bottom = 5.dp)) {
                 Text(
                     buildAnnotatedString {
@@ -119,13 +119,13 @@ fun ProductRowItem(
                         }
                         append(" ${product.sellingPrice}")
                     },
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(7f),
                     color = MaterialTheme.colorScheme.onBackground,
                     fontWeight = FontWeight.Medium,
                     fontSize = MaterialTheme.typography.titleSmall.fontSize,
                 )
                 Row(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(3f),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.End
                 ) {
