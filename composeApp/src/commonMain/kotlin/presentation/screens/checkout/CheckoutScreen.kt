@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -74,83 +75,6 @@ fun CheckoutScreen(component: CheckoutScreenComponent) {
         mutableStateListOf<Product>()
     }
 
-    when (placeOrder) {
-        is NetworkUiState.Loading -> {
-            LoadingDialog()
-        }
-
-        is NetworkUiState.Error -> {
-            AlertMessageDialog(title = "Something went wrong !",
-                message = (placeOrder as NetworkUiState.Error).error,
-                positiveButtonText = "OK",
-                onPositiveClick = {
-
-                })
-        }
-
-        is NetworkUiState.Success -> {
-            ModalBottomSheet(onDismissRequest = {
-                component.goBack()
-            }, sheetState = sheetState) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(500.dp)
-                        .padding(horizontal = 12.dp)
-                ) {
-                    Column(
-                        modifier = Modifier.align(Alignment.Center),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(
-                            text = "Order Placed",
-                            fontSize = MaterialTheme.typography.headlineSmall.fontSize,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onBackground,
-                            textAlign = TextAlign.Center
-                        )
-                        Image(
-                            modifier = Modifier.size(200.dp),
-                            painter = painterResource(Res.drawable.ic_success),
-                            contentDescription = null,
-                        )
-                        Text(
-                            text = "Your order has been confirmed, we will send you confirmation email shortly.",
-                            fontSize = MaterialTheme.typography.bodySmall.fontSize,
-                            fontWeight = FontWeight.Light,
-                            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f),
-                            textAlign = TextAlign.Center
-                        )
-                    }
-                    Button(
-                        modifier = Modifier
-                            .align(Alignment.BottomCenter)
-                            .fillMaxWidth()
-                            .padding(bottom = 12.dp),
-                        onClick = {
-                            scope.launch { sheetState.hide() }.invokeOnCompletion {
-//                                if (!sheetState.isVisible) {
-//                                    navController.popBackStack()
-//                                }
-                                component.goBack()
-                            }
-                        },
-                        colors = ButtonDefaults.buttonColors(
-                            contentColor = MaterialTheme.colorScheme.onPrimary,
-                            containerColor = MaterialTheme.colorScheme.primary,
-                            disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                            disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant
-                        )
-                    ) {
-                        Text("Continue Shopping")
-                    }
-                }
-            }
-        }
-
-        else -> {}
-    }
-
     CartWaveScaffold(modifier = Modifier.fillMaxSize(), topBar = {
         Box(
             modifier = Modifier.fillMaxWidth().height(60.dp).padding(horizontal = 20.dp),
@@ -173,6 +97,82 @@ fun CheckoutScreen(component: CheckoutScreenComponent) {
             )
         }
     }) { innerPadding ->
+        when (placeOrder) {
+            is NetworkUiState.Loading -> {
+                LoadingDialog()
+            }
+
+            is NetworkUiState.Error -> {
+                AlertMessageDialog(title = "Something went wrong !",
+                    message = (placeOrder as NetworkUiState.Error).error,
+                    positiveButtonText = "OK",
+                    onPositiveClick = {
+
+                    })
+            }
+
+            is NetworkUiState.Success -> {
+                ModalBottomSheet(modifier = Modifier.padding(innerPadding), onDismissRequest = {
+                    component.goBack()
+                }, sheetState = sheetState, dragHandle = { BottomSheetDefaults.DragHandle() }) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(500.dp)
+                            .padding(horizontal = 12.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier.align(Alignment.Center),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Text(
+                                text = "Order Placed",
+                                fontSize = MaterialTheme.typography.headlineSmall.fontSize,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onBackground,
+                                textAlign = TextAlign.Center
+                            )
+                            Image(
+                                modifier = Modifier.size(200.dp),
+                                painter = painterResource(Res.drawable.ic_success),
+                                contentDescription = null,
+                            )
+                            Text(
+                                text = "Your order has been confirmed, we will send you confirmation email shortly.",
+                                fontSize = MaterialTheme.typography.bodySmall.fontSize,
+                                fontWeight = FontWeight.Light,
+                                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f),
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                        Button(
+                            modifier = Modifier
+                                .align(Alignment.BottomCenter)
+                                .fillMaxWidth()
+                                .padding(bottom = 12.dp),
+                            onClick = {
+                                scope.launch { sheetState.hide() }.invokeOnCompletion {
+//                                if (!sheetState.isVisible) {
+//                                    navController.popBackStack()
+//                                }
+                                    component.goBack()
+                                }
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                contentColor = MaterialTheme.colorScheme.onPrimary,
+                                containerColor = MaterialTheme.colorScheme.primary,
+                                disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant
+                            )
+                        ) {
+                            Text("Continue Shopping")
+                        }
+                    }
+                }
+            }
+
+            else -> {}
+        }
         Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
             Column(
                 modifier = Modifier.fillMaxSize()
