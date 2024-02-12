@@ -23,6 +23,7 @@ import okio.FileSystem
 import org.koin.compose.KoinContext
 import presentation.screens.address.AddressScreen
 import presentation.screens.auth.root.AuthScreen
+import presentation.screens.checkout.CheckoutScreen
 import presentation.screens.main.MainScreen
 import presentation.screens.onboarding.OnboardingScreen
 import presentation.screens.productDetail.ProductDetailScreen
@@ -65,6 +66,7 @@ fun App(root: RootComponent) {
                         is RootComponent.Child.AuthScreenChild -> AuthScreen(instance.component)
                         is RootComponent.Child.MainScreenChild -> MainScreen(instance.component)
                         is RootComponent.Child.AddressScreenChild -> AddressScreen(instance.component)
+                        is RootComponent.Child.CheckoutScreenChild -> CheckoutScreen(instance.component)
                         is RootComponent.Child.ProductDetailScreenChild -> ProductDetailScreen(
                             instance.component
                         )

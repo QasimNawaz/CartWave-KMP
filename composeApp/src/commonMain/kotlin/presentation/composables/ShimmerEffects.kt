@@ -44,14 +44,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import cartwave_kmp.composeapp.generated.resources.Res
 import org.jetbrains.compose.resources.painterResource
+import utils.AsyncImageLoader
 import utils.header
 
 @Composable
@@ -229,6 +232,135 @@ fun ProductDetailShimmer() {
         }
     }
 }
+
+@Composable
+fun CartItemShimmer() {
+    Card(
+        modifier = Modifier
+            .padding(vertical = 5.dp)
+            .fillMaxWidth()
+            .height(110.dp),
+        shape = MaterialTheme.shapes.medium,
+        elevation = CardDefaults.cardElevation(defaultElevation = 5.dp),
+    ) {
+        Row(modifier = Modifier.fillMaxWidth().padding(6.dp)) {
+            Spacer(
+                modifier = Modifier
+                    .size(100.dp)
+                    .clip(shape = MaterialTheme.shapes.medium)
+                    .shimmer()
+            )
+            Spacer(modifier = Modifier.width(10.dp))
+            Box(
+                modifier = Modifier.height(100.dp).weight(1f)
+            ) {
+                Spacer(
+                    modifier = Modifier.fillMaxWidth().height(16.dp).padding(end = 20.dp)
+                        .clip(shape = MaterialTheme.shapes.medium)
+                        .align(Alignment.TopStart)
+                        .shimmer(),
+                )
+
+                Spacer(
+                    modifier = Modifier.width(50.dp).height(16.dp).align(Alignment.BottomStart)
+                        .clip(shape = MaterialTheme.shapes.medium)
+                        .shimmer(),
+                )
+
+                Spacer(
+                    modifier = Modifier
+                        .height(30.dp)
+                        .width(100.dp)
+                        .clip(CircleShape)
+                        .background(color = MaterialTheme.colorScheme.secondaryContainer)
+                        .align(Alignment.BottomEnd).shimmer(),
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun CheckoutItemShimmer() {
+    Card(
+        modifier = Modifier
+            .padding(vertical = 5.dp)
+            .fillMaxWidth()
+            .height(110.dp),
+        shape = MaterialTheme.shapes.medium,
+        elevation = CardDefaults.cardElevation(defaultElevation = 5.dp),
+    ) {
+        Row(modifier = Modifier.fillMaxWidth().padding(6.dp)) {
+            Spacer(
+                modifier = Modifier
+                    .size(100.dp)
+                    .clip(shape = MaterialTheme.shapes.medium)
+                    .shimmer()
+            )
+            Spacer(modifier = Modifier.width(10.dp))
+            Box(
+                modifier = Modifier.height(100.dp).weight(1f)
+            ) {
+                Spacer(
+                    modifier = Modifier.fillMaxWidth().height(16.dp).padding(end = 20.dp)
+                        .clip(shape = MaterialTheme.shapes.medium)
+                        .align(Alignment.TopStart)
+                        .shimmer(),
+                )
+
+                Spacer(
+                    modifier = Modifier.width(50.dp).height(16.dp).align(Alignment.BottomStart)
+                        .clip(shape = MaterialTheme.shapes.medium)
+                        .shimmer(),
+                )
+
+                Spacer(
+                    modifier = Modifier
+                        .height(16.dp)
+                        .width(100.dp)
+                        .clip(shape = MaterialTheme.shapes.medium)
+                        .background(color = MaterialTheme.colorScheme.secondaryContainer)
+                        .align(Alignment.BottomEnd).shimmer(),
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun AddressShimmer() {
+    Row(
+        modifier = Modifier
+            .padding(top = 32.dp)
+            .fillMaxWidth()
+            .border(
+                width = 1.dp,
+                color = Color.Gray.copy(
+                    alpha = 0.5f
+                ),
+                shape = RoundedCornerShape(10.dp)
+            )
+            .clip(shape = RoundedCornerShape(10.dp))
+            .padding(vertical = 12.dp, horizontal = 6.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Spacer(
+            modifier = Modifier
+                .width(100.dp)
+                .height(75.dp)
+                .clip(shape = MaterialTheme.shapes.medium)
+                .shimmer(),
+        )
+        Spacer(modifier = Modifier.width(10.dp))
+        Spacer(
+            modifier = Modifier
+                .weight(1f)
+                .height(20.dp)
+                .shimmer(),
+        )
+    }
+}
+
 
 @Composable
 fun Modifier.shimmer(): Modifier =

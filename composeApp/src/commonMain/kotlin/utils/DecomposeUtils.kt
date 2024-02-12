@@ -10,6 +10,7 @@ import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.essenty.lifecycle.LifecycleOwner
 import com.arkivanov.essenty.lifecycle.doOnDestroy
 import domain.model.BaseResponse
+import domain.model.Product
 import domain.utils.NetworkCall
 import domain.utils.NetworkUiState
 import kotlinx.coroutines.CoroutineScope
@@ -32,8 +33,11 @@ fun LifecycleOwner.coroutineScope(
 
 suspend fun <T> Flow<NetworkCall<BaseResponse<T>>>.asUiState(
     uiState: MutableStateFlow<NetworkUiState<T>>,
+    showLoader: Boolean = true
 ) {
-    uiState.emit(NetworkUiState.Loading)
+    if (showLoader) {
+        uiState.emit(NetworkUiState.Loading)
+    }
     collectLatest {
         when (it) {
             is NetworkCall.Error.HttpError -> {
@@ -54,7 +58,7 @@ suspend fun <T> Flow<NetworkCall<BaseResponse<T>>>.asUiState(
 
             is NetworkCall.Success -> {
                 if (it.data.success && it.data.data != null) {
-                    uiState.emit(NetworkUiState.Success(it.data.data!!))
+                    uiState.emit(NetworkUiState.Success(it.data.data))
                 } else {
                     uiState.emit(NetworkUiState.Error(error = it.data.message))
                 }
@@ -62,6 +66,52 @@ suspend fun <T> Flow<NetworkCall<BaseResponse<T>>>.asUiState(
         }
     }
 }
+
+suspend fun Flow<NetworkCall<BaseResponse<List<Product>>>>.asCartUiState(
+    uiState: MutableStateFlow<NetworkUiState<List<Product>>>,
+    subTotal: MutableStateFlow<Int>
+) {
+    uiState.emit(NetworkUiState.Loading)
+    collectLatest {
+        when (it) {
+            is NetworkCall.Error.HttpError -> {
+                subTotal.emit(0)
+                uiState.emit(
+                    NetworkUiState.Error(
+                        code = it.code, error = "${it.message}"
+                    )
+                )
+            }
+
+            is NetworkCall.Error.SerializationError -> {
+                subTotal.emit(0)
+                uiState.emit(NetworkUiState.Error(error = "${it.message}"))
+            }
+
+            is NetworkCall.Error.GenericError -> {
+                subTotal.emit(0)
+                uiState.emit(NetworkUiState.Error(error = "${it.message}"))
+            }
+
+            is NetworkCall.Success -> {
+                if (it.data.success && it.data.data != null) {
+                    it.data.data.let { carts ->
+                        subTotal.emit(carts.sumOf { product ->
+                            (product.sellingPrice?.replace(",", "")?.toIntOrNull()
+                                ?: 0) * product.cartQty
+                        })
+                        uiState.emit(NetworkUiState.Success(carts))
+                    }
+                    uiState.emit(NetworkUiState.Success(it.data.data))
+                } else {
+                    subTotal.emit(0)
+                    uiState.emit(NetworkUiState.Error(error = it.data.message))
+                }
+            }
+        }
+    }
+}
+
 
 @ExperimentalFoundationApi
 @ExperimentalDecomposeApi

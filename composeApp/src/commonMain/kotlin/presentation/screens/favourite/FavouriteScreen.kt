@@ -24,6 +24,7 @@ import presentation.composables.EmptyView
 import presentation.composables.ProductRowItem
 import presentation.composables.ProductShimmerItem
 import presentation.screens.main.root.RootComponent
+import utils.header
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -60,12 +61,6 @@ fun FavouriteScreen(component: FavouriteScreenComponent) {
             }
             favourites.loadState.apply {
                 when {
-                    refresh is LoadStateNotLoading && favourites.itemCount < 1 -> {
-                        item {
-                            EmptyView(Res.drawable.ic_empty_wish_list, "Your wishlist is empty")
-                        }
-                    }
-
                     refresh is LoadStateLoading || append is LoadStateLoading -> {
                         items(2) {
                             ProductShimmerItem(
@@ -77,13 +72,20 @@ fun FavouriteScreen(component: FavouriteScreenComponent) {
                     }
 
                     refresh is LoadStateError -> {
-                        item {
+                        header {
                             (refresh as LoadState.Error).error.message.let { error ->
-                                EmptyView(
-                                    Res.drawable.ic_network_error, error ?: "Something went wrong"
-                                )
+                                if (error == "No data found!") {
+                                    EmptyView(
+                                        Res.drawable.ic_empty_wish_list,
+                                        "Your wishlist is empty"
+                                    )
+                                } else {
+                                    EmptyView(
+                                        Res.drawable.ic_network_error,
+                                        error ?: "Something went wrong"
+                                    )
+                                }
                             }
-
                         }
                     }
                 }

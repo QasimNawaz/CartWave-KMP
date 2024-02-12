@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -91,28 +92,33 @@ fun PageContent(component: PageComponent, onNavigateToDetail: (id: Int) -> Unit)
                                 }
                             }
                             category.products?.let { products ->
-                                itemsIndexed(products, key = { _, item ->
-                                    item.id
-                                }) { index, item ->
-                                    ProductRowItem(product = item,
-                                        onNavigateToDetail = onNavigateToDetail,
-                                        onUpdateFavourite = { add ->
-                                            val categoryList = list.toMutableList()
-                                            val productList = products.toMutableList()
-                                            if (add) {
-                                                productList[index] = item.copy(isFavourite = true)
-                                                categoryList[categoryIndex] = category.copy(
-                                                    products = productList
-                                                )
-                                                component.addToFavourite(item.id, categoryList)
-                                            } else {
-                                                productList[index] = item.copy(isFavourite = false)
-                                                categoryList[categoryIndex] = category.copy(
-                                                    products = productList
-                                                )
-                                                component.removeFromFavourite(item.id, categoryList)
-                                            }
-                                        })
+                                itemsIndexed(products) { index, item ->
+                                    key(item.id) {
+                                        ProductRowItem(product = item,
+                                            onNavigateToDetail = onNavigateToDetail,
+                                            onUpdateFavourite = { add ->
+                                                val categoryList = list.toMutableList()
+                                                val productList = products.toMutableList()
+                                                if (add) {
+                                                    productList[index] =
+                                                        item.copy(isFavourite = true)
+                                                    categoryList[categoryIndex] = category.copy(
+                                                        products = productList
+                                                    )
+                                                    component.addToFavourite(item.id, categoryList)
+                                                } else {
+                                                    productList[index] =
+                                                        item.copy(isFavourite = false)
+                                                    categoryList[categoryIndex] = category.copy(
+                                                        products = productList
+                                                    )
+                                                    component.removeFromFavourite(
+                                                        item.id,
+                                                        categoryList
+                                                    )
+                                                }
+                                            })
+                                    }
                                 }
                             }
                         }

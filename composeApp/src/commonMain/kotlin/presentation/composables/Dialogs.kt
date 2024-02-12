@@ -20,15 +20,22 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import cartwave_kmp.composeapp.generated.resources.Res
 import org.jetbrains.compose.resources.DrawableResource
@@ -178,5 +185,54 @@ fun AlertMessageDialog(
 
         }
 
+    }
+}
+
+@OptIn(ExperimentalResourceApi::class)
+@Composable
+fun AddressDialog(onDismissRequest: () -> Unit, onAddAddress: (address: String) -> Unit) {
+    val address = remember {
+        mutableStateOf<String?>(null)
+    }
+    Dialog(onDismissRequest = onDismissRequest) {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),
+            shape = RoundedCornerShape(size = 12.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .background(MaterialTheme.colorScheme.secondaryContainer)
+                    .padding(all = 16.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+                CartWaveOutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = address.value ?: "",
+                    onValueChange = {
+                        address.value = it
+                    },
+                    label = "Address"
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Button(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .testTag("AddressDialogConfirm"), onClick = {
+                        onAddAddress.invoke(address.value.toString())
+                    }, colors = ButtonDefaults.buttonColors(
+                        contentColor = MaterialTheme.colorScheme.onPrimary,
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant
+                    ), enabled = !address.value.isNullOrBlank()
+                ) {
+                    Text(text = "Confirm")
+                }
+            }
+        }
     }
 }

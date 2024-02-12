@@ -3,18 +3,27 @@ package data.dataSource
 import data.model.User
 import data.repository.cache.KeyValueStorageRepo
 import data.utils.URLConstants
+import data.utils.URLConstants.ADD_ADDRESS
 import data.utils.URLConstants.ADD_TO_CART
 import data.utils.URLConstants.ADD_TO_FAVOURITE
+import data.utils.URLConstants.GET_ADDRESSES
+import data.utils.URLConstants.GET_PRIMARY_ADDRESS
 import data.utils.URLConstants.GET_PRODUCT
 import data.utils.URLConstants.GET_USER_CART
+import data.utils.URLConstants.PLACE_ORDER
 import data.utils.URLConstants.PRODUCTS_GROUP_BY_CATEGORY
 import data.utils.URLConstants.REMOVE_FROM_CART
 import data.utils.URLConstants.REMOVE_FROM_FAVOURITE
+import data.utils.URLConstants.UPDATE_PRIMARY_ADDRESS
 import data.utils.safeRequest
+import domain.dto.AddAddressRequestDto
 import domain.dto.UpdateCartRequestDto
 import domain.dto.UpdateFavouriteRequestDto
 import domain.dto.LoginRequestDto
+import domain.dto.PlaceOrderRequestDto
 import domain.dto.RegisterRequestDto
+import domain.dto.UpdatePrimaryAddressRequestDto
+import domain.model.Address
 import domain.model.BaseResponse
 import domain.model.Product
 import domain.model.ProductsByCategoryItem
@@ -149,6 +158,68 @@ class RemoteDataSourceImpl(
                     productId,
                     0
                 )
+            )
+        }
+    }
+
+    override suspend fun addAddress(address: String): NetworkCall<BaseResponse<String>> {
+        return client.safeRequest {
+            method = HttpMethod.Post
+            url(ADD_ADDRESS)
+            header("Authorization", "Bearer ${keyValueStorageRepo.accessToken}")
+            contentType(ContentType.Application.Json)
+            setBody(
+                AddAddressRequestDto(
+                    keyValueStorageRepo.user?.id ?: 0,
+                    address
+                )
+            )
+        }
+    }
+
+    override suspend fun updatePrimaryAddress(addressId: Int): NetworkCall<BaseResponse<String>> {
+        return client.safeRequest {
+            method = HttpMethod.Post
+            url(UPDATE_PRIMARY_ADDRESS)
+            header("Authorization", "Bearer ${keyValueStorageRepo.accessToken}")
+            contentType(ContentType.Application.Json)
+            setBody(
+                UpdatePrimaryAddressRequestDto(
+                    keyValueStorageRepo.user?.id ?: 0,
+                    addressId
+                )
+            )
+        }
+    }
+
+    override suspend fun getPrimaryAddress(): NetworkCall<BaseResponse<Address>> {
+        return client.safeRequest {
+            method = HttpMethod.Get
+            url(GET_PRIMARY_ADDRESS)
+            header("Authorization", "Bearer ${keyValueStorageRepo.accessToken}")
+            parameter("userId", keyValueStorageRepo.user?.id)
+            contentType(ContentType.Application.Json)
+        }
+    }
+
+    override suspend fun getAddresses(): NetworkCall<BaseResponse<List<Address>>> {
+        return client.safeRequest {
+            method = HttpMethod.Get
+            url(GET_ADDRESSES)
+            header("Authorization", "Bearer ${keyValueStorageRepo.accessToken}")
+            parameter("userId", keyValueStorageRepo.user?.id)
+            contentType(ContentType.Application.Json)
+        }
+    }
+
+    override suspend fun placeOrder(placeOrderRequestDto: PlaceOrderRequestDto): NetworkCall<BaseResponse<String>> {
+        return client.safeRequest {
+            method = HttpMethod.Post
+            url(PLACE_ORDER)
+            header("Authorization", "Bearer ${keyValueStorageRepo.accessToken}")
+            contentType(ContentType.Application.Json)
+            setBody(
+                placeOrderRequestDto.copy(userId = keyValueStorageRepo.user?.id ?: 0)
             )
         }
     }

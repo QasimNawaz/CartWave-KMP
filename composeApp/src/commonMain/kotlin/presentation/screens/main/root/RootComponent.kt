@@ -8,6 +8,7 @@ import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.pushNew
 import com.arkivanov.decompose.router.stack.replaceAll
 import kotlinx.serialization.Serializable
+import presentation.screens.checkout.CheckoutScreenComponent
 import presentation.screens.address.AddressScreenComponent
 import presentation.screens.auth.root.AuthScreenComponent
 import presentation.screens.main.MainScreenComponent
@@ -49,30 +50,37 @@ class RootComponent(
             )
 
             is Configuration.AuthScreenConfig -> Child.AuthScreenChild(
-                AuthScreenComponent(componentContext = context,
-                    onRootNavigate = {
-                        navigation.replaceAll(Configuration.MainScreenConfig)
-                    })
+                AuthScreenComponent(componentContext = context, onRootNavigate = {
+                    navigation.replaceAll(Configuration.MainScreenConfig)
+                })
             )
 
             is Configuration.MainScreenConfig -> Child.MainScreenChild(
-                MainScreenComponent(componentContext = context,
-                    onRootNavigate = {
-                        navigation.pushNew(it)
-                    })
+                MainScreenComponent(componentContext = context, onRootNavigate = {
+                    navigation.pushNew(it)
+                })
             )
 
             is Configuration.AddressScreenConfig -> Child.AddressScreenChild(
-                AddressScreenComponent(componentContext = context)
+                AddressScreenComponent(componentContext = context, onGoBack = {
+                    navigation.pop()
+                })
+            )
+
+            is Configuration.CheckoutScreenConfig -> Child.CheckoutScreenChild(
+                CheckoutScreenComponent(componentContext = context, onRootNavigate = {
+                    navigation.pushNew(it)
+                }, onGoBack = {
+                    navigation.pop()
+                })
             )
 
             is Configuration.ProductDetailScreenConfig -> Child.ProductDetailScreenChild(
-                ProductDetailScreenComponent(
-                    componentContext = context,
-                    productId = config.productId, onGoBack = {
+                ProductDetailScreenComponent(componentContext = context,
+                    productId = config.productId,
+                    onGoBack = {
                         navigation.pop()
-                    }
-                )
+                    })
             )
         }
     }
@@ -83,6 +91,7 @@ class RootComponent(
         data class AuthScreenChild(val component: AuthScreenComponent) : Child()
         data class MainScreenChild(val component: MainScreenComponent) : Child()
         data class ProductDetailScreenChild(val component: ProductDetailScreenComponent) : Child()
+        data class CheckoutScreenChild(val component: CheckoutScreenComponent) : Child()
         data class AddressScreenChild(val component: AddressScreenComponent) : Child()
     }
 
@@ -102,6 +111,9 @@ class RootComponent(
 
         @Serializable
         data class ProductDetailScreenConfig(val productId: Int) : Configuration()
+
+        @Serializable
+        data object CheckoutScreenConfig : Configuration()
 
         @Serializable
         data object AddressScreenConfig : Configuration()
