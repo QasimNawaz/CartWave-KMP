@@ -19,7 +19,7 @@ Welcome to CartWave, an open-source eCommerce mobile app designed to enhance and
 🔄 [**Multiplatform Paging:**](https://github.com/cashapp/multiplatform-paging) Benefit from the multiplatform-paging library, which packages AndroidX Paging for Kotlin/Multiplatform, allowing seamless and efficient data paging.
 
 ## Screenshots
-<img src="images/screenshot-1.png" width="180" height="320"> <img src="images/screenshot-2.png" width="180" height="320"> <img src="images/screenshot-3.png" width="180" height="320">
+<img src="images/screenshot-1.png" width="240" height="400"> <img src="images/screenshot-2.png" width="240" height="400"> <img src="images/screenshot-3.png" width="240" height="400">
 
 ## Video
 
